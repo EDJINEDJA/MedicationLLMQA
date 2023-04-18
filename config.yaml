@@ -1,0 +1,4 @@
+dataset_json : "./inputs/final/medications.json"
+dataset_txt : "./inputs/processed/Medications.txt"
+chunk_size : 796
+path_api : "./env/.env"

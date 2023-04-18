@@ -1,0 +1,12 @@
+datasets 
+transformers 
+sentencepiece 
+torch
+pytorch-lightning
+pyyaml
+python-dotenv
+langchain
+tiktoken
+faiss-cpu
+gradio
+chromadb

@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+datasets = "*"
+transformers = "*"
+sentencepiece = "*"
+torch = "*"
+pytorch-lightning = "*"
+pyyaml = "*"
+python-dotenv = "*"
+langchain = "*"
+tiktoken = "*"
+faiss-cpu = "*"
+gradio = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
