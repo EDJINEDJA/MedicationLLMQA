@@ -17,6 +17,7 @@ faiss-cpu = "*"
 gradio = "*"
 huggingface-hub = "*"
 llama-cpp-python = "*"
+openai = "*"
 
 [dev-packages]
 

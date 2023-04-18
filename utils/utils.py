@@ -61,7 +61,8 @@ class Functional(Dataloader):
         doc_search = FAISS.from_texts(self.load_dataset() , OpenAIEmbeddings())
         return doc_search
 
-    def QA_chroma(self, llm : str="OpenAI" , question : str ="who are you?"):
+    def QA_chroma(self, question : str ="who are you?"):
+        llm = self.config["llm"]
         if llm=="GPT4ALL":
             if not os.path.exists(self.config['weights']):
                 os.makedirs(self.config['weights'])

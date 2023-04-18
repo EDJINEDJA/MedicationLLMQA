@@ -1,8 +1,8 @@
 import gradio as gr
-from src.gradio import greet
+from src.gradio import app
 
 if __name__ == "__main__":
-    demo = gr.Interface(fn=greet, inputs="text", outputs="text")
+    demo = gr.Interface(fn=app, inputs="text", outputs="text")
 
     demo.launch(share=True) 
 
