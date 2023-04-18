@@ -59,7 +59,7 @@ class Functional(Dataloader):
         return doc_search
 
     def QA_chroma(self, question : str):
-        qa  = RetrievalQA(llm = OpenAI(),
+        qa  = RetrievalQA.from_chain_type(llm = OpenAI(),
                         chain_type="stuff",
                         retriever = self.embeddings_chroma().as_retriever())
         answer = qa.run(question) 
