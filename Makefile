@@ -8,7 +8,7 @@ initialize_git:
         sleep 1
         git branch -M  main
         sleep 1
-        git remote add origin https://github.com/EDJINEDJA/MedicationQA.git
+        git remote add origin https://github.com/EDJINEDJA/MedicationLLMQA.git
         sleep 1
         git push origin main
         

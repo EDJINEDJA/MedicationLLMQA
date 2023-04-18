@@ -10,6 +10,9 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.chains import RetrievalQA
 from langchain import OpenAI
 
+from huggingface_hub import hf_hub_download
+from langchain.llms import LlamaCpp
+from langchain import PromptTemplate, LLMChain
 import numpy as np
 import os
 
@@ -58,18 +61,28 @@ class Functional(Dataloader):
         doc_search = FAISS.from_texts(self.load_dataset() , OpenAIEmbeddings())
         return doc_search
 
-    def QA_chroma(self, question : str):
-        qa  = RetrievalQA.from_chain_type(llm = OpenAI(),
-                        chain_type="stuff",
-                        retriever = self.embeddings_chroma().as_retriever())
-        answer = qa.run(question) 
-        return answer
+    def QA_chroma(self, llm : str="OpenAI" , question : str ="who are you?"):
+        if llm=="GPT4ALL":
+            if not os.path.exists(self.config['weights']):
+                os.makedirs(self.config['weights'])
+                #Download the model
+                hf_hub_download(repo_id="LLukas22/gpt4all-lora-quantized-ggjt",
+                                filename="ggjt-model.bin",
+                                local_dir=self.config['weights'])
+            llm = LlamaCpp(model_path=self.config['weights']+"ggjt-model.bin")
+            qa  = RetrievalQA.from_chain_type(llm = llm,
+                            chain_type="stuff",
+                            retriever = self.embeddings_chroma().as_retriever())
+            answer = qa.run(question) 
+            return answer
+        else:
+            qa  = RetrievalQA.from_chain_type(llm = OpenAI(),
+                            chain_type="stuff",
+                            retriever = self.embeddings_chroma().as_retriever())
+            answer = qa.run(question) 
+            return answer
 
-    def QA_faiss(self, query : str):
-        chain = load_qa_chain(OpenAI(), chain_type="stuff")
-        docs = self.embeddings_faiss().similarity_search(query)
-        answer = chain.run(input_documents=docs, question=query)
-        return answer
+
 
      
    

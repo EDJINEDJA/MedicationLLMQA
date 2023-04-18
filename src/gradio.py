@@ -14,4 +14,4 @@ with open(args.config, mode = 'r') as stream:
 
 
 def greet(query):
-    return Functional(config).QA_chroma(query)
+    return Functional(config).QA_chroma("GPT4ALL",query)

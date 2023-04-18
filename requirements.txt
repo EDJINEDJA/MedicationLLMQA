@@ -10,3 +10,5 @@ tiktoken
 faiss-cpu
 gradio
 chromadb
+huggingface_hub
+llama-cpp-python
