@@ -63,3 +63,8 @@ To install required packages use:
 ```bash
 $ pip3 install -r requirements.txt
 ```
+run app.py to get started:
+
+```bash
+$  python app.py --config config.yaml
+```
