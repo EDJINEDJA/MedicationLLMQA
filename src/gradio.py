@@ -13,5 +13,13 @@ with open(args.config, mode = 'r') as stream:
     config = yaml.safe_load(stream)
 
 
-def app(query):
-    return Functional(config).QA_chroma(query)
+def app(query:str)-> object:
+    """_summary_
+
+    Args:
+        query (_type_=str): _description_=It is the input text, it can be a question
+
+    Returns:
+        _type_=str: _description_ = This is the output, it is the response according to the question asked before
+    """
+    return Functional(config).QA_faiss(query)

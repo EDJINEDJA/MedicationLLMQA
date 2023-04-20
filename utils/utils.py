@@ -13,6 +13,7 @@ from langchain import OpenAI
 from huggingface_hub import hf_hub_download
 from langchain.llms import LlamaCpp
 from langchain import PromptTemplate, LLMChain
+from typing import List
 import numpy as np
 import os
 
@@ -47,6 +48,18 @@ class Dataloader():
         texts = text_splitter.split_documents(documents)
         return texts
 
+    def load_dataset_faiss(self)-> List[str]:
+        with open(file=self.config['dataset_txt'] , mode="r",encoding="utf-8") as file:
+            documents = file.read()
+            file.close()
+        
+        text_splitter = CharacterTextSplitter(separator="\n\n", chunk_size=self.config["chunk_size"] , chunk_overlap=0,length_function=len)
+        return text_splitter.split_text(documents)
+        
+
+            
+
+
 class Functional(Dataloader):
     def __init__(self , config) -> None:
         super(Functional ,self).__init__(config)
@@ -57,8 +70,13 @@ class Functional(Dataloader):
         doc_search = Chroma.from_documents(self.load_dataset() , OpenAIEmbeddings())
         return doc_search
 
+
     def embeddings_faiss(self):
         doc_search = FAISS.from_texts(self.load_dataset() , OpenAIEmbeddings())
+        return doc_search
+
+    def embeddings_faiss_(self):
+        doc_search = FAISS.from_texts(self.load_dataset_faiss() , OpenAIEmbeddings())
         return doc_search
 
     def QA_chroma(self, question : str ="who are you?"):
@@ -82,6 +100,23 @@ class Functional(Dataloader):
                             retriever = self.embeddings_chroma().as_retriever())
             answer = qa.run(question) 
             return answer
+
+    def QA_faiss(self, query : str ="who are you?"):
+        if not os.path.exists(self.config['weights']):
+            os.makedirs(self.config['weights'])
+            #Download the model
+            hf_hub_download(repo_id="LLukas22/gpt4all-lora-quantized-ggjt",
+                            filename="ggjt-model.bin",
+                            local_dir=self.config['weights'])
+        llm = LlamaCpp(model_path=self.config['weights']+"ggjt-model.bin")
+        chain=load_qa_chain(llm=llm , chain_type="stuff")
+        docsearch=self.embeddings_faiss_()
+        docs = docsearch.similarity_search(query)
+        return chain.run(input_documents = docs , question = query)
+
+
+
+
 
 
 
