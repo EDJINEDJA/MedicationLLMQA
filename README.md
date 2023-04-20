@@ -5,9 +5,6 @@
     <a href="https://github.com/EDJINEDJA/MedicationLLMQA/blob/main/LICENSE" alt="Licence">
         <img src="https://img.shields.io/badge/license-MIT-yellow.svg" />
     </a>
-    <a href="https://github.com/EDJINEDJA/MedicationLLMQA/commits/main" alt="Commits">
-        <img src="https://github.com/EDJINEDJA/MedicationLLMQA/master" />
-    </a>
     <a href="https://github.com/EDJINEDJA/MedicationLLMQA" alt="Activity">
         <img src="https://img.shields.io/badge/contributions-welcome-orange.svg" />
     </a>
